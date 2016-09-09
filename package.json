@@ -1,0 +1,33 @@
+{
+  "name": "scala-tune",
+  "version": "1.0.0",
+  "description": "Explore the scl tunings files available from http://www.huygens-fokker.org",
+  "main": "api",
+  "scripts": {
+    "clean": "rimraf scripts/scl scripts/tunings.json",
+    "data": "node scripts/scl-download && node scripts/scl-to-json",
+    "dev": "json-server scripts/tunings.json",
+    "seed": "node --require dotenv/config scripts/db-seed",
+    "start": "nodemon --require dotenv/config .",
+    "test": "standard"
+  },
+  "keywords": [
+    "scala",
+    "microtonal"
+  ],
+  "author": "Joseph Post <joe@jcpst.com> (http://jcpst.com)",
+  "license": "MIT",
+  "dependencies": {
+    "mongodb": "^2.2.9",
+    "morgan": "^1.7.0",
+    "restify": "^4.1.1"
+  },
+  "devDependencies": {
+    "dotenv": "^2.0.0",
+    "nodemon": "^1.10.2",
+    "request": "^2.74.0",
+    "rimraf": "^2.5.4",
+    "standard": "^8.0.0",
+    "unzip": "^0.1.11"
+  }
+}
