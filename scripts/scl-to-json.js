@@ -4,8 +4,8 @@ const fs = require('fs')
 const path = require('path')
 const os = require('os')
 
-const tuningsDir = process.env.TUNINGS_DIR || path.join(__dirname, 'scl')
-const outputFile = process.env.TUNINGS_JSON || path.join(__dirname, 'tunings.json')
+const tuningsDir = path.join(__dirname, 'scl')
+const outputFile = path.join(__dirname, 'tunings.json')
 
 function readFile (filePath) {
   try {
@@ -18,8 +18,8 @@ function readFile (filePath) {
   }
 }
 
-function splitLines (lines) {
-  return lines.split(os.EOL)
+function splitLines (fileContents) {
+  return fileContents.split(os.EOL)
 }
 
 function commentedLine (line) {
@@ -30,27 +30,22 @@ function removeSpaces (line) {
   return line.replace(/\s/g, '')
 }
 
-function ratio (line) {
-  const i = line.split('/')
-  return i[0] / i[1]
-}
-
-function cents (line) {
-  const i = removeSpaces(line)
-  return Math.pow(2, i / 1200)
+function tuningModel (name) {
+  return {
+    description: '',
+    intervals: [],
+    name: name,
+    notes: 0
+  }
 }
 
 function parseTuning (filepath) {
   const fileContents = readFile(filepath)
   const lines = splitLines(fileContents)
+  const tuningName = path.basename(filepath, '.scl')
 
   let counter = 0
-  let tuning = {
-    description: '',
-    intervals: [],
-    name: path.basename(filepath, '.scl'),
-    notes: 0
-  }
+  let tuning = tuningModel(tuningName)
 
   lines.forEach(line => {
     if (!commentedLine(line) && removeSpaces(line)) {
@@ -84,4 +79,3 @@ function allTunings (dirpath) {
 
 const tunings = allTunings(tuningsDir)
 fs.writeFileSync(outputFile, JSON.stringify(tunings))
-
