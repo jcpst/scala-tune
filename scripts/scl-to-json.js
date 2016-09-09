@@ -61,16 +61,7 @@ function parseTuning (filepath) {
       } else if (counter === 2) {
         tuning.notes = parseInt(line)
       } else {
-        const isDecimal = line.match(/^.*\./)
-        const isRatio = line.match(/[0-9]\/[0-9]/)
-
-        if (isDecimal) {
-          tuning.intervals.push(cents(line))
-        } else if (isRatio) {
-          tuning.intervals.push(ratio(line))
-        } else {
-          tuning.intervals.push(line)
-        }
+        tuning.intervals.push(removeSpaces(line))
       }
     }
   })
