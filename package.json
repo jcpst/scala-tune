@@ -2,36 +2,44 @@
   "name": "scala-tune",
   "version": "1.0.0",
   "description": "Explore the scl tunings files available from http://www.huygens-fokker.org",
+  "author": "Joseph Post <joe@jcpst.com> (http://jcpst.com)",
+  "license": "MIT",
   "main": "api",
+  "standard": {
+    "globals": [
+      "angular"
+    ]
+  },
   "scripts": {
-    "clean": "rimraf scripts/scl scripts/tunings.json",
+    "clean": "rimraf scripts/scl scripts/tunings.json public",
     "data": "node scripts/scl-download && node scripts/scl-to-json",
     "dev:api": "nodemon --require dotenv/config",
-    "dev:client": "lite-server -c bs-config.json",
-    "dev": "npm-run-all --silent --parallel dev:*",
+    "predev:client": "cpx client/**/*.html public",
+    "dev:client": "webpack-dev-server --open --content-base public",
+    "dev": "npm-run-all --parallel dev:*",
     "seed": "node --require dotenv/config scripts/db-seed",
     "start": "",
     "test": "standard"
   },
-  "keywords": [
-    "scala",
-    "microtonal"
-  ],
-  "author": "Joseph Post <joe@jcpst.com> (http://jcpst.com)",
-  "license": "MIT",
   "dependencies": {
     "mongodb": "^2.2.9",
     "morgan": "^1.7.0",
     "restify": "^4.1.1"
   },
   "devDependencies": {
+    "angular": "^1.5.8",
+    "angular-resource": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "cpx": "^1.5.0",
     "dotenv": "^2.0.0",
-    "lite-server": "^2.2.2",
     "nodemon": "^1.10.2",
     "npm-run-all": "^3.1.0",
+    "pre-commit": "^1.1.3",
     "request": "^2.74.0",
     "rimraf": "^2.5.4",
     "standard": "^8.0.0",
-    "unzip": "^0.1.11"
+    "unzip": "^0.1.11",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.1"
   }
 }
