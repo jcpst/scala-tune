@@ -4,6 +4,7 @@ node_modules
 *.log
 *.swp
 *.swo
+TODO.md
 public
 scripts/scl
 scripts/tunings.json
