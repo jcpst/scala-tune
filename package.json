@@ -6,9 +6,11 @@
   "scripts": {
     "clean": "rimraf scripts/scl scripts/tunings.json",
     "data": "node scripts/scl-download && node scripts/scl-to-json",
-    "dev": "json-server scripts/tunings.json",
+    "dev:api": "nodemon --require dotenv/config",
+    "dev:client": "lite-server -c bs-config.json",
+    "dev": "npm-run-all --silent --parallel dev:*",
     "seed": "node --require dotenv/config scripts/db-seed",
-    "start": "nodemon --require dotenv/config .",
+    "start": "",
     "test": "standard"
   },
   "keywords": [
@@ -24,7 +26,9 @@
   },
   "devDependencies": {
     "dotenv": "^2.0.0",
+    "lite-server": "^2.2.2",
     "nodemon": "^1.10.2",
+    "npm-run-all": "^3.1.0",
     "request": "^2.74.0",
     "rimraf": "^2.5.4",
     "standard": "^8.0.0",
