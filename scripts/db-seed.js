@@ -6,12 +6,16 @@ const tunings = require('./tunings.json')
 
 function insertTunings (db, cb) {
   const collection = db.collection('tunings')
+  collection.remove().then(() => {
   collection.insertMany(tunings, (err, result) => {
     if (err) throw err
     console.log(`Inserted ${tunings.length} documents into the collection`)
     cb(result)
   })
+  })
 }
+
+
 
 db.connect(url, (err, conn) => {
   if (err) throw err
