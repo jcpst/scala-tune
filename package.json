@@ -5,20 +5,14 @@
   "author": "Joseph Post <joe@jcpst.com> (http://jcpst.com)",
   "license": "MIT",
   "main": "api",
-  "standard": {
-    "globals": [
-      "angular"
-    ]
-  },
   "scripts": {
     "clean": "rimraf scripts/scl scripts/tunings.json public",
     "data": "node scripts/scl-download && node scripts/scl-to-json",
     "dev:api": "nodemon --require dotenv/config",
-    "predev:client": "cpx client/**/*.html public",
-    "dev:client": "webpack-dev-server --open --content-base public",
-    "dev": "npm-run-all --parallel dev:*",
+    "dev:ui-html": "cpx client/**/*.html public --watch",
+    "dev:ui-js": "webpack-dev-server --open --content-base public",
+    "dev": "npm-run-all --silent --parallel dev:*",
     "seed": "node --require dotenv/config scripts/db-seed",
-    "start": "",
     "test": "standard"
   },
   "dependencies": {
