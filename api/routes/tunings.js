@@ -1,73 +1,34 @@
 'use strict'
 
-const db = require('mongodb').MongoClient
-const connstring = process.env.CONNECTION_STRING
+const mongodb = require('mongodb')
+const call = require('./database-connection')
+const db = mongodb.MongoClient
+const ObjectId = mongodb.ObjectId
 
-function findAllTunings (db, cb) {
-  const tunings = db.collection('tunings')
-  tunings.find({}).toArray((err, result) => {
-    if (err) throw err
-    cb(result)
-  })
+function findAll (db, params, cb) {
+  db.find().toArray(cb)
 }
 
-function findTuningsByNumberOfNotes (db, numOfNotes, cb) {
-  const notes = parseInt(numOfNotes)
-  const tunings = db.collection('tunings')
-  tunings.find({}).filter({ notes }).toArray((err, result) => {
-    if (err) throw err
-    cb(result)
-  })
+function findByNumberOfNotes (db, params, cb) {
+  const notes = +params.notes
+  db.find().filter({ notes }).toArray(cb)
 }
 
-function pageThroughTunings (db, config, cb) {
-  const tunings = db.collection('tunings')
-  const { pageSize, pageNumber } = config
-  tunings.find({})
-    .skip(pageSize * (pageNumber - 1))
-    .limit(pageSize)
-    .toArray((err, result) => {
-      if (err) throw err
-      cb(result)
-    })
+function findById (db, params, cb) {
+  const _id = new ObjectId(params.id)
+  db.findOne({ _id }, cb)
 }
 
-function index (req, res, next) {
-  db.connect(connstring, (err, conn) => {
-    if (err) throw err
-    findAllTunings(conn, (result) => {
-      res.send(result)
-      next()
-    })
-  })
-}
-
-function find (req, res, next) {
-  db.connect(connstring, (err, conn) => {
-    if (err) throw err
-    findTuningsByNumberOfNotes(conn, req.params.notes, (result) => {
-      res.send(result)
-      next()
-    })
-  })
-}
-
-function page (req, res, next) {
-  db.connect(connstring, (err, conn) => {
-    if (err) throw err
-    pageThroughTunings(conn, {
-      pageNumber: req.params.page,
-      pageSize: parseInt(req.params.size) || 10
-    }, (result) => {
-      res.send(result)
-      next()
-    })
-  })
+function page (db, params, cb) {
+  const pageSize = +params.size || 10
+  const pageNo = params.page
+  db.find().skip(pageSize * (pageNo - 1)).limit(pageSize).toArray(cb)
 }
 
 module.exports = app => {
-  app.get('/tunings', index)
-  app.get('/tunings/notes/:notes', find)
-  app.get('/tunings/page/:page', page)
+  app.get('/tunings', call(findAll))
+  app.get('/tunings/:id', call(findById))
+  app.get('/tunings/notes/:notes', call(findByNumberOfNotes))
+  app.get('/tunings/page/:page', call(page))
 }
 
