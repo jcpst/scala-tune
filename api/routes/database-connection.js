@@ -10,7 +10,6 @@ function resolve (cb) {
   }
 }
 
-
 function call (query) {
   return (req, res, next) => {
     db.connect(connstring, (err, conn) => {

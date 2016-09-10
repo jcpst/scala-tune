@@ -2,7 +2,6 @@
 
 const mongodb = require('mongodb')
 const call = require('./database-connection')
-const db = mongodb.MongoClient
 const ObjectId = mongodb.ObjectId
 
 function findAll (db, params, cb) {
