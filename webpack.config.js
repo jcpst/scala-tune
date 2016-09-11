@@ -4,7 +4,12 @@ module.exports = {
   devtool: 'source-map',
   entry: './ui/js/main.js',
   module: {
-    loaders: []
+    loaders: [
+      {
+        test: /\.html$/,
+        loader: 'html'
+      }
+    ]
   },
   output: {
     filename: 'app.js',

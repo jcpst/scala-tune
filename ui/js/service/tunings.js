@@ -1,5 +1,7 @@
 'use strict'
 
 module.exports = function ($resource) {
-  return $resource('http://localhost:8079/tunings/page/1')
+  return $resource('https://scala-tune-kloytnzgta.now.sh/tunings/page/:page', {
+    page: 1
+  })
 }
