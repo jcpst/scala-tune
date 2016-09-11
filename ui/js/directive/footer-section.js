@@ -4,7 +4,7 @@ module.exports = function () {
   return {
     restrict: 'AE',
     replace: true,
-    templateUrl: '/views/partials/footer.html'
+    template: require('./footer-section.html')
   }
 }
 
