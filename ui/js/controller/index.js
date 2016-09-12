@@ -2,4 +2,5 @@
 
 var app = require('angular').module('app')
 
-app.controller('ctrl', require('./get-tunings'))
+app.controller('getMany', require('./get-tunings'))
+app.controller('getOne', require('./get-one'))

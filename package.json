@@ -6,6 +6,7 @@
   "license": "MIT",
   "main": "api",
   "scripts": {
+    "build": "webpack",
     "clean": "rimraf scripts/scl scripts/tunings.json public",
     "data:download": "node scripts/scl-download",
     "data:write": "node scripts/scl-to-json",
@@ -15,7 +16,7 @@
     "dev:ui-js": "webpack-dev-server --open --content-base public",
     "dev:ui": "run-p dev:ui-*",
     "dev": "run-p dev:*",
-    "deploy:html": "cpx client/**/*.html /tmp/__temp_static_content",
+    "deploy:html": "cpx ui/index.html /tmp/__temp_static_content",
     "deploy:js": "webpack --config webpack.deploy.js",
     "deploy": "run-s deploy:*",
     "seed": "node --require dotenv/config scripts/db-seed",
