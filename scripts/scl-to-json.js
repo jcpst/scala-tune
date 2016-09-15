@@ -18,39 +18,33 @@ function readFile (filePath) {
   }
 }
 
-function splitLines (fileContents) {
-  return fileContents.split(os.EOL)
-}
-
-function commentedLine (line) {
-  return line.substring(0, 1) === '!'
-}
-
 function removeSpaces (line) {
   return line.replace(/\s/g, '')
 }
 
 function tuningModel (name) {
   return {
-    description: '',
-    intervals: [],
+    description: 'No description.',
+    intervals: [ 1 ],
     name: name,
-    notes: 0
+    notes: 1
   }
 }
 
 function parseTuning (filepath) {
   const fileContents = readFile(filepath)
-  const lines = splitLines(fileContents)
+  const lines = fileContents.split(os.EOL)
   const tuningName = path.basename(filepath, '.scl')
 
   let counter = 0
   let tuning = tuningModel(tuningName)
 
   lines.forEach(line => {
-    if (!commentedLine(line) && removeSpaces(line)) {
-      counter++
+    const notCommentedLine = line => !/^!/.test(line)
+    const notBlankLine = removeSpaces(line)
 
+    if (notCommentedLine && notBlankLine) {
+      counter++
       if (counter === 1) {
         tuning.description = line
       } else if (counter === 2) {
