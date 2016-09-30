@@ -21,25 +21,31 @@ function readFile (filePath) {
 function tuningModel (name) {
   return {
     description: 'No description.',
-    intervals: [ 1 ],
+    intervals: [1],
     name: name,
     notes: 1
   }
+}
+
+function removeSpaces (line) {
+  return line.replace(/\s/g, '')
+}
+
+function commentedLine (line) {
+  return /^!/.test(line)
 }
 
 function parseTuning (filepath) {
   const fileContents = readFile(filepath)
   const lines = fileContents.split(os.EOL)
   const tuningName = path.basename(filepath, '.scl')
+  const lineIsNotBlank = removeSpaces
 
   let counter = 0
   let tuning = tuningModel(tuningName)
 
-  lines.forEach(line => {
-    const notCommentedLine = (line) => !/^!/.test(line)
-    const notBlankLine = (line) => line.replace(/\s/g, '')
-
-    if (notCommentedLine && notBlankLine) {
+  lines.forEach((line) => {
+    if (!commentedLine && lineIsNotBlank) {
       counter++
       if (counter === 1) {
         tuning.description = line
@@ -58,7 +64,7 @@ function allTunings (dirpath) {
   const tuningFiles = fs.readdirSync(dirpath)
   let tunings = []
 
-  tuningFiles.forEach(file => {
+  tuningFiles.forEach((file) => {
     const filePath = path.join(dirpath, file)
     const tuning = parseTuning(filePath)
     tunings.push(tuning)
