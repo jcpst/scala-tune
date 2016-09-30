@@ -15,16 +15,16 @@
     "dev:ui-html": "cpx ui/index.html public --watch",
     "dev:ui-js": "webpack-dev-server --open --content-base public",
     "dev:ui": "run-p dev:ui-*",
-    "dev": "run-p dev:*",
+    "dev": "run-p dev:ui dev:api",
     "deploy:html": "cpx ui/index.html /tmp/__temp_static_content",
     "deploy:js": "webpack --config webpack.deploy.js",
     "deploy": "run-s deploy:*",
     "seed": "node --require dotenv/config scripts/db-seed",
     "start": "node .",
-    "test": "standard"
+    "test": "eslint {ui,scripts,api}/**/*.js"
   },
   "dependencies": {
-    "mongodb": "^2.2.9",
+    "mongodb": "^2.2.10",
     "morgan": "^1.7.0",
     "restify": "^4.1.1"
   },
@@ -33,16 +33,21 @@
     "angular-resource": "^1.5.8",
     "angular-route": "^1.5.8",
     "cpx": "^1.5.0",
+    "css-loader": "^0.25.0",
     "dotenv": "^2.0.0",
-    "html-loader": "^0.4.3",
+    "eslint": "^3.6.1",
+    "file-loader": "^0.9.0",
+    "html-loader": "^0.4.4",
+    "materialize-css": "^0.97.7",
     "nodemon": "^1.10.2",
     "npm-run-all": "^3.1.0",
     "pre-commit": "^1.1.3",
-    "request": "^2.74.0",
+    "request": "^2.75.0",
     "rimraf": "^2.5.4",
-    "standard": "^8.0.0",
+    "style-loader": "^0.13.1",
     "unzip": "^0.1.11",
+    "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.15.1"
+    "webpack-dev-server": "^1.16.0"
   }
 }

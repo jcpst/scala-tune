@@ -18,10 +18,6 @@ function readFile (filePath) {
   }
 }
 
-function removeSpaces (line) {
-  return line.replace(/\s/g, '')
-}
-
 function tuningModel (name) {
   return {
     description: 'No description.',
@@ -40,8 +36,8 @@ function parseTuning (filepath) {
   let tuning = tuningModel(tuningName)
 
   lines.forEach(line => {
-    const notCommentedLine = line => !/^!/.test(line)
-    const notBlankLine = removeSpaces(line)
+    const notCommentedLine = (line) => !/^!/.test(line)
+    const notBlankLine = (line) => line.replace(/\s/g, '')
 
     if (notCommentedLine && notBlankLine) {
       counter++

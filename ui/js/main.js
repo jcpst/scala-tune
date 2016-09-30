@@ -1,5 +1,8 @@
 'use strict'
 
+require('materialize-css/dist/css/materialize.min.css')
+require('materialize-css/dist/js/materialize.min.js')
+
 var angular = require('angular')
 
 require('angular-resource')
@@ -10,17 +13,4 @@ var app = angular.module('app', ['ngRoute', 'ngResource'])
 require('./controller')
 require('./directive')
 
-app.config(function ($routeProvider) {
-  $routeProvider
-    .when('/', {
-      template: require('../view/main.html'),
-      controller: 'getMany'
-    })
-    .when('/detail/:id', {
-      template: require('../view/detail.html'),
-      controller: 'getOne'
-    })
-    .otherwise({
-      redirectTo: '/'
-    })
-})
+app.config(require('./router'))
