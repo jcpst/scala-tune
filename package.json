@@ -19,6 +19,7 @@
     "deploy:html": "cpx ui/index.html /tmp/__temp_static_content",
     "deploy:js": "webpack --config webpack.deploy.js",
     "deploy": "run-s deploy:*",
+    "format": "eslint --fix {ui,scripts,api}/**/*.js",
     "seed": "node --require dotenv/config scripts/db-seed",
     "start": "node .",
     "test": "eslint {ui,scripts,api}/**/*.js"
